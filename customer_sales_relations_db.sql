@@ -61,3 +61,37 @@ CREATE TABLE Line (
     FOREIGN KEY (INV_NUMBER) REFERENCES Invoice(INV_NUMBER),
     FOREIGN KEY (P_CODE) REFERENCES Product(P_CODE)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- SQL Code to safely create and populate tables, dropping them first if they already exist
+
+-- Drop tables in reverse order of dependency
+DROP TABLE IF EXISTS Line;
+DROP TABLE IF EXISTS Invoice;
+DROP TABLE IF EXISTS Product;
+DROP TABLE IF EXISTS Customer;
+DROP TABLE IF EXISTS Vendor;
+
+-- Populate Vendor table
+INSERT INTO Vendor (V_CODE, V_NAME, V_CONTACT, V_AREACODE, V_PHONE, V_STATE, V_ORDER) VALUES
+('V001', 'Tech Supplies', 'John Doe', '123', '555-0110', 'CA', 15000.00),
+('V002', 'Office Lux', 'Jane Smith', '124', '555-0220', 'NY', 20000.00);
+
+-- Populate Customer table
+INSERT INTO Customer (CUS_CODE, CUS_LNAME, CUS_FNAME, CUS_INITIAL, CUS_AREACODE, CUS_PHONE, CUS_BALANCE) VALUES
+('C001', 'Smith', 'John', 'D', '123', '555-1111', 120.50),
+('C002', 'Johnson', 'Jane', 'M', '124', '555-2222', 585.75);
+
+-- Populate Product table
+INSERT INTO Product (P_CODE, P_DESCRIPT, P_INDATE, P_QOH, P_MIN, P_PRICE, P_DISCOUNT, V_CODE) VALUES
+('P100', 'Laptop 15inch', '2023-01-15', 30, 10, 850.00, 0.10, 'V001'),
+('P101', 'Office Chair', '2023-02-20', 20, 5, 225.00, 0.15, 'V002');
+
+-- Populate Invoice table
+INSERT INTO Invoice (INV_NUMBER, CUS_CODE, INV_DATE) VALUES
+('INV001', 'C001', '2023-05-01'),
+('INV002', 'C002', '2023-05-02');
+
+-- Populate Line table
+INSERT INTO Line (INV_NUMBER, LINE_NUMBER, P_CODE, LINE_UNITS, LINE_PRICE) VALUES
+('INV001', 1, 'P100', 1, 850.00),
+('INV002', 1, 'P101', 2, 450.00);  -- Note the price here is for two units, assuming the discount is applied per unit
