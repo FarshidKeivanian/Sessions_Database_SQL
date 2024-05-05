@@ -1,6 +1,6 @@
--- SQL Code to safely create tables, dropping them first if they already exist
+-- SQL Code to safely create and populate tables, dropping them first if they already exist
 
--- Drop tables in reverse order of dependency
+-- Drop tables in reverse order of dependency to avoid foreign key constraints
 DROP TABLE IF EXISTS Line;
 DROP TABLE IF EXISTS Invoice;
 DROP TABLE IF EXISTS Product;
@@ -61,15 +61,6 @@ CREATE TABLE Line (
     FOREIGN KEY (INV_NUMBER) REFERENCES Invoice(INV_NUMBER),
     FOREIGN KEY (P_CODE) REFERENCES Product(P_CODE)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
--- SQL Code to safely create and populate tables, dropping them first if they already exist
-
--- Drop tables in reverse order of dependency
-DROP TABLE IF EXISTS Line;
-DROP TABLE IF EXISTS Invoice;
-DROP TABLE IF EXISTS Product;
-DROP TABLE IF EXISTS Customer;
-DROP TABLE IF EXISTS Vendor;
 
 -- Populate Vendor table
 INSERT INTO Vendor (V_CODE, V_NAME, V_CONTACT, V_AREACODE, V_PHONE, V_STATE, V_ORDER) VALUES
