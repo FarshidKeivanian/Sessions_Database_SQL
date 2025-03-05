@@ -14,6 +14,12 @@ CREATE TABLE IF NOT EXISTS Patient (
     MedicalHistory TEXT
 );
 
+-- Insert Sample Data into Patient Table
+INSERT INTO Patient (FirstName, LastName, DateOfBirth, Gender, Address, ContactInfo, MedicalHistory)
+VALUES 
+('John', 'Doe', '1990-05-12', 'Male', '123 Main St, Sydney', 'johndoe@gmail.com', 'Diabetic'),
+('Sarah', 'Smith', '1985-07-25', 'Female', '456 Queen St, Melbourne', 'sarahsmith@gmail.com', 'No known allergies');
+
 -- Doctor Table
 CREATE TABLE IF NOT EXISTS Doctor (
     DoctorID INT AUTO_INCREMENT PRIMARY KEY,
@@ -22,6 +28,12 @@ CREATE TABLE IF NOT EXISTS Doctor (
     Specialization VARCHAR(100),
     ContactInfo VARCHAR(100)
 );
+
+-- Insert Sample Data into Doctor Table
+INSERT INTO Doctor (FirstName, LastName, Specialization, ContactInfo)
+VALUES 
+('Dr. James', 'Wilson', 'Cardiology', 'drwilson@clinic.com'),
+('Dr. Lisa', 'Cuddy', 'Endocrinology', 'drcuddy@clinic.com');
 
 -- Appointment Table
 CREATE TABLE IF NOT EXISTS Appointment (
@@ -34,6 +46,12 @@ CREATE TABLE IF NOT EXISTS Appointment (
     FOREIGN KEY (DoctorID) REFERENCES Doctor(DoctorID) ON DELETE CASCADE
 );
 
+-- Insert Sample Data into Appointment Table
+INSERT INTO Appointment (PatientID, DoctorID, AppointmentDate, Status)
+VALUES 
+(1, 1, '2025-03-10 10:30:00', 'Scheduled'),
+(2, 2, '2025-03-12 11:00:00', 'Scheduled');
+
 -- Visit Table
 CREATE TABLE IF NOT EXISTS Visit (
     VisitID INT AUTO_INCREMENT PRIMARY KEY,
@@ -42,6 +60,12 @@ CREATE TABLE IF NOT EXISTS Visit (
     Notes TEXT,
     FOREIGN KEY (AppointmentID) REFERENCES Appointment(AppointmentID) ON DELETE CASCADE
 );
+
+-- Insert Sample Data into Visit Table
+INSERT INTO Visit (AppointmentID, VisitDate, Notes)
+VALUES 
+(1, '2025-03-10 10:35:00', 'Patient reported chest pain'),
+(2, '2025-03-12 11:05:00', 'Routine check-up');
 
 -- Diagnosis Table
 CREATE TABLE IF NOT EXISTS Diagnosis (
